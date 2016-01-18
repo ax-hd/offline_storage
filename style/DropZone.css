@@ -6,3 +6,17 @@
 	margin-right:auto;
 	text-align: center;
 }
+
+#render-zone{
+	width:80%;
+	margin-top:10px;
+	border: 1px solid #222222;	
+	margin-left: auto;
+	margin-right:auto;
+	min-height:200px;	
+}
+
+#render-item{
+	width: 100%;
+	height: 100%;
+}

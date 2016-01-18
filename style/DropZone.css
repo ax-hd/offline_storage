@@ -1,5 +1,8 @@
-#drop_zone{
+#drop-zone{
 	width: 80%;
-	height: 50px;
+	height: 100px;
 	border: 1px dashed #222222;
+	margin-left: auto;
+	margin-right:auto;
+	text-align: center;
 }

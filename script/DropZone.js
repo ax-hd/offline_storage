@@ -4,7 +4,26 @@ $(window).load(function(){
   function handleFileSelect(evt) {
     evt.stopPropagation();
     evt.preventDefault();
+	debugger;
     var files = evt.dataTransfer.files; // FileList object.
+	var reader = new FileReader();
+		
+	reader.onload = (function(theFile){
+		return function(e){
+			/*Creating blob from array buffer*/
+			var fileArray = new Uint8Array(e.target.result);
+			var blob = new Blob([fileArray], {type:"image/jpeg"});
+			
+			/*store blob in indexed db*/
+			
+			
+			var span = document.createElement('span');
+            span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+          document.getElementById('render-zone').insertBefore(span, null);
+        };
+	})(files[0]);
+	reader.readAsArrayBuffer(files[0]);
     
   }
 
@@ -15,7 +34,7 @@ $(window).load(function(){
   }
 
   // Setup the dnd listeners.
-  var dropZone = document.getElementById('file-selector');
+  var dropZone = document.getElementById('drop-zone');
   dropZone.addEventListener('dragover', handleDragOver, false);
   dropZone.addEventListener('drop', handleFileSelect, false);
 

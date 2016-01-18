@@ -1,3 +1,79 @@
+var OfflineFileHandler = function(file){
+		this.file = file === undefined ? {} : file;
+		this.initializeFileHandlers();
+		return this;
+};
+
+OfflineFileHandler.prototype = {
+	file:{},
+	fileType: ['.jpg','.png','.mp4','.pdf','.docx'],
+	fileHandlerStore:{},
+	getFileHandlerForType: function getFileHandlerForType(fileType){
+		return this.fileHandlerStore[fileType];
+	},
+	initializeFileHandlers: function generateFileHandlers(){
+		var thisObject = this;
+		$.each(thisObject.fileType,function(key, value){
+			thisObject.fileHandlerStore[value] = {
+				fileType:value,
+				readFromIndexedDB: function(){},
+				addToIndexedDB: function(){},
+				renderWithinParent: function(){},
+				removeFromDB: function(){},
+				dbInterface: function(){},
+			};
+		});
+	},
+	createFileHandlerForJPG: function(){
+		var jpgHandler = this.getFileHandlerForType('.jpg');
+		
+		jpgHandler.readFromIndexedDB = function(){
+		
+		};
+		
+	},
+	createFileHandlerForMP4: function(){
+		var mp4Handler = this.getFileHandlerForType('.mp4');
+		mp4Handler.readFromIndexDB = function(){
+		
+		};
+	},
+	readFromIndexedDB: function(){
+	
+	},
+	addToIndexedDB: function(){
+	
+	},
+	removeFromDB: function(){
+	
+	},
+	indexedDBObject:function(){
+		return {
+			db:{},
+			request:{},
+			isBrowserSupporting: true,
+			initialize: function(){
+				window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+				window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+				window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange
+				if (!window.indexedDB) {
+					window.alert("Your browser doesn't support a stable version of IndexedDB.");
+					this.isBrowserSupporting = false;
+				}else{
+					this.isBrowserSupporting = true;;
+				}
+			},
+			openDatabaseConnection: function(dbName, dbVersion){
+				dbVersion = dbVersion === undefined ? 1 : dbVersion;
+				this.request = window.indexedDB.open(dbName, dbVersion);
+			},
+		}
+	},
+	constructor: OfflineFileHandler
+}
+
+
+
 $(window).load(function(){
   console.log("Script Loaded");
   var fileReader = new FileReader();
@@ -13,7 +89,7 @@ $(window).load(function(){
 					debugger;
 			/*Creating blob from array buffer*/
 			var fileArray = new Uint8Array(e.target.result);
-			var blob = new Blob([fileArray], {type:"image/jpeg"});
+			var blob = new Blob([fileArray], {type:"video/wmv"});
 			
 			/*store blob in indexed db*/
 			window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
@@ -61,7 +137,7 @@ $(window).load(function(){
 					 var fileBlob = request.result;
 					 var blobReader = new FileReader();
 					 blobReader.onload=function(event){
-						$("#render-zone").html('<img src="" id="render-item"></img>');
+						$("#render-zone").html('<video src="" id="render-item"></video>');
 						$("#render-item").attr('src',event.target.result);					 
 					 };
 					 blobReader.readAsDataURL(fileBlob.data);

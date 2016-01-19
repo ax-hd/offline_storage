@@ -1,0 +1,3 @@
+http://jsfiddle.net/GH7pS/4/
+http://www.html5rocks.com/en/tutorials/file/dndfiles/
+http://stackoverflow.com/questions/23795034/creating-a-blob-or-a-file-from-javascript-binary-string-changes-the-number-of-by
